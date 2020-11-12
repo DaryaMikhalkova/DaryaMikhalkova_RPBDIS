@@ -1,0 +1,68 @@
+﻿@using Sewing.Models.ViewModel;
+@model DataViewModel<ConsoleApp.Models.Material>
+
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h1>Get</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Materials_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Types_of_materials)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Number_of_stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Materials_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Types_of_materials)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number_of_stock)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+        @{
+            var minval = Model.CurrentPage - 5 > 1 ? Model.CurrentPage - 5 : 1;
+            if (minval > 1)
+            {
+                <li class="page-item">
+                    <a asp-action="GetMaterials" asp-controller="Materials" asp-route-page="1" class="page-link">1</a>
+                </li>
+            }
+        }
+
+        @for (var i = 0; i < 10 && minval <= Model.PageCount; i++, minval++)
+        {
+
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a asp-action="GetMaterials" asp-controller="Materials" asp-route-page=@(minval) class="page-link">@minval</a>
+            </li>
+        }
+        @if (minval < Model.PageCount)
+        {
+            <li class="page-item">
+                <a asp-action="GetMaterials" asp-controller="Materials" asp-route-page=@Model.PageCount class="page-link">@Model.PageCount</a>
+            </li>
+        }
+    </ul>
+</div>

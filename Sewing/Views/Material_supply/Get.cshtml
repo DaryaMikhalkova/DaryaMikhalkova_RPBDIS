@@ -1,0 +1,86 @@
+﻿@using Sewing.Models.ViewModel;
+@model DataViewModel<ConsoleApp.Models.Material_supply>
+
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h1>Get</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Data.First().Material.Materials_name)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Provider)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().MaterialSupply_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Price_of_materials)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Amount_of_material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Delivery_data)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Material.Materials_name)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Provider)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialSupply_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price_of_materials)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount_of_material)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Delivery_data)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+        @{
+            var minval = Model.CurrentPage - 5 > 1 ? Model.CurrentPage - 5 : 1;
+            if (minval > 1)
+            {
+                <li class="page-item">
+                    <a asp-action="GetMaterial_supply" asp-controller="Material_supplyt" asp-route-page="1" class="page-link">1</a>
+                </li>
+            }
+        }
+
+        @for (var i = 0; i < 10 && minval <= Model.PageCount; i++, minval++)
+        {
+
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a asp-action="GetMaterial_supply" asp-controller="Material_supply" asp-route-page=@(minval) class="page-link">@minval</a>
+            </li>
+        }
+        @if (minval < Model.PageCount)
+        {
+            <li class="page-item">
+                <a asp-action="GetMaterial_supply" asp-controller="Material_supply" asp-route-page=@Model.PageCount class="page-link">@Model.PageCount</a>
+            </li>
+        }
+    </ul>
+</div>

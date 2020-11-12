@@ -1,0 +1,104 @@
+﻿@using Sewing.Models.ViewModel;
+@model DataViewModel<ConsoleApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Get";
+}
+
+<h1>Get</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Quantity_of_product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Price_of_order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Orders)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Employees)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Start_data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Date_of_delivery)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.First().Product)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity_of_product)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price_of_order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Orders)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employees)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start_data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_of_delivery)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Id)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+        @{
+            var minval = Model.CurrentPage - 5 > 1 ? Model.CurrentPage - 5 : 1;
+            if (minval > 1)
+            {
+                <li class="page-item">
+                    <a asp-action="GetOrders" asp-controller="Order" asp-route-page="1" class="page-link">1</a>
+                </li>
+            }
+        }
+
+        @for (var i = 0; i < 10 && minval <= Model.PageCount; i++, minval++)
+        {
+
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a asp-action="GetOrders" asp-controller="Order" asp-route-page=@(minval) class="page-link">@minval</a>
+            </li>
+        }
+        @if (minval < Model.PageCount)
+        {
+            <li class="page-item">
+                <a asp-action="GetOrders" asp-controller="Order" asp-route-page=@Model.PageCount class="page-link">@Model.PageCount</a>
+            </li>
+        }
+    </ul>
+</div>
